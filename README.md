@@ -108,13 +108,13 @@ Dentro de src encontraremos
       <br>
     - [x] 📁<b>DTOs</b> Recibe y valida datos de entrada o salida, sin acoplar directamente a las entidades del dominio.
       <br>
-  - [x] 📁<b>Infrastructure</b> Implementa adaptadores concretos: base de datos, HTTP, APIs, etc.
+  - [x] 📁<b>Infrastructure</b> Implementa adaptadores concretos en este caso un <b>Servicio Web</b>
     <br>
     - [x] 📁<b>Repositories</b> Adaptadores de salida: acceso a DB, almacenamiento, etc.
       <br>
-    - [x] 📁<b>Controllers</b> Adaptadores de entrada: HTTP, GraphQL, CLI, etc.
+    - [x] 📁<b>Controllers</b> Recibe todas las solicitudes como puente entre el repositorio y las solicitudes HTTTP.
       <br>
-    - [x] 📁<b>Routes</b> Routas definidas para los controladores
+    - [x] 📁<b>Routes</b> Routas HTTP definidas para los controladores
       <br>
 - [x] 📁<b>Prisma</b> Contiene archivo de configuración de ORM Prisma
       
