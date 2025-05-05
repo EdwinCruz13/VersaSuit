@@ -1,4 +1,4 @@
-# VersaSuit_1.0.0
+# VersaSuit
 Bienvenido al repositorio de la aplicación de facturación e inventario desarrollado 
 en Postgres, Express, React, Nodejs, ademas de usar Prisma ORM.
 <br>
