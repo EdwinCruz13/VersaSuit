@@ -137,7 +137,7 @@ Dentro de src encontraremos
 
 
 <details open="">
-  <summary><h2>💡 Resultado</h2></summary>
+  <summary><h2>🤷‍♂️ Resultados</h2></summary>
 <p dir="auto"> 
   Ver el proyecto <a href="#">🔗 aquí</a>
   <br>
