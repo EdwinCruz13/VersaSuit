@@ -1,0 +1,45 @@
+{
+  "name": "versasuit",
+  "version": "2.0.0",
+  "description": "Accounting and invetory app",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && node build/index.js",
+    "build": "tsc -p .",
+    "dev": "npm run build && nodemon src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EdwinCruz13/VersaSuit.git"
+  },
+  "keywords": [
+    "accounting",
+    "inventory",
+    "users",
+    "account",
+    "sells",
+    "multicompany"
+  ],
+  "author": "EdwinCruz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EdwinCruz13/VersaSuit/issues"
+  },
+  "homepage": "https://github.com/EdwinCruz13/VersaSuit",
+  "dependencies": {
+    "@prisma/client": "^6.1.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^22.10.1",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "prisma": "^6.1.0"
+  }
+}
