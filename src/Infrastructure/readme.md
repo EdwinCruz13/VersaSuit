@@ -40,9 +40,13 @@ Dentro de este módulo encontras
       <br>
     - [x] 📁<b>Controllers</b> Recibe todas las solicitudes como puente entre el repositorio y las solicitudes HTTP.
       <br>
-    - [x] 📁<b>Routes</b> Routas HTTP definidas para los controladores
+    - [x] 📁<b>Routes</b> Routas HTTP definidas para los controladores.
       <br>
-    - [x] 📁<b>DB</b> Archivo de configuracion de prismaORM
+    - [x] 📁<b>DB</b> Archivo de configuracion de prismaORM.
+      <br>
+    - [x] 📁<b>Middleware</b> Archivo que permite interceptar solicitudes HTTP con el próposito de un procesamiento previo de datos.
+      <br>
+    - [x] 📁<b>Shared</b> Permite compartir funciones para todos los módulos.
       <br>
     <br><br>
 </p>
