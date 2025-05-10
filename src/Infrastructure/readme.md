@@ -34,22 +34,6 @@ Puedes Ver el sitio <a href="#">🔗 aqui</a>
 <br>
 Dentro de este módulo encontras
 
-- [x] 📁<b>Domain</b> Representa el corazón de la aplicación: reglas, modelos y comportamientos del negocio, importante para la arquitectura hexagonal.
-    <br>
-    - [x] 📁<b>Entities</b> Clases que representan conceptos clave del negocio.
-      <br>
-    - [x] 📁<b>Services</b> Lógica de dominio.
-      <br>
-    - [x] 📁<b>ValueObjects</b> Objetos inmutables con reglas internas de validación.
-      <br>
-    - [x] 📁<b>Ports</b> Permite conectar el mundo exterior con el dominio a traves de contratos (interfaces).
-      <br>
-- [x] 📁<b>Application</b> Coordina los flujos entre el dominio y las interfaces externas (use cases).
-    <br>
-    - [x] 📁<b>UseCases</b> Casos de uso con lógica para orquestar el dominio y salidas.
-      <br>
-    - [x] 📁<b>DTOs</b> Recibe y valida datos de entrada o salida, sin acoplar directamente a las entidades del dominio.
-      <br>
 - [x] 📁<b>Infrastructure</b> Implementa adaptadores concretos en este caso un <b>Servicio Web</b>
     <br>
     - [x] 📁<b>Repositories</b> Adaptadores de salida: acceso a DB, almacenamiento, etc.

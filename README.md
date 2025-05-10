@@ -89,9 +89,6 @@ En una carpetas "src" que contiene todas las funcionalidades del proyecto de API
 Archivo "package.json" de como esta configurado el proyecto.  
 
 Dentro de src encontraremos
-- [x] 📁<b><u>Modules</u></b> Contiene cada módulos de sistemas para una mejor organización, en cada módulo se definirá la siguiente estructura: .
-  <br>
-
   - [x] 📁<b>Domain</b> Representa el corazón de la aplicación: reglas, modelos y comportamientos del negocio, importante para la arquitectura hexagonal.
     <br>
     - [x] 📁<b>Entities</b> Clases que representan conceptos clave del negocio.
