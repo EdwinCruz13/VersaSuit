@@ -38,9 +38,11 @@ Dentro de este módulo encontras
     <br>
     - [x] 📁<b>Repositories</b> Adaptadores de salida: acceso a DB, almacenamiento, etc.
       <br>
-    - [x] 📁<b>Controllers</b> Recibe todas las solicitudes como puente entre el repositorio y las solicitudes HTTTP.
+    - [x] 📁<b>Controllers</b> Recibe todas las solicitudes como puente entre el repositorio y las solicitudes HTTP.
       <br>
     - [x] 📁<b>Routes</b> Routas HTTP definidas para los controladores
+      <br>
+    - [x] 📁<b>DB</b> Archivo de configuracion de prismaORM
       <br>
     <br><br>
 </p>
