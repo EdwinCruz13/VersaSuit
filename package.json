@@ -6,7 +6,11 @@
   "scripts": {
     "start": "npm run build && node build/index.js",
     "build": "tsc -p .",
-    "dev": "npm run build && nodemon src/index.ts"
+    "clean": "tsc --build --clean",
+    "dev": "npm run build && nodemon src/index.ts",
+    "prisma:generate": "prisma generate --schema=src/infrastructure/DB/prisma/schema.prisma",
+    "prisma:push": "prisma db push --schema=src/infrastructure/DB/prisma/schema.prisma",
+    "prisma:pull": "prisma db pull --schema=src/infrastructure/DB/prisma/schema.prisma"
   },
   "repository": {
     "type": "git",

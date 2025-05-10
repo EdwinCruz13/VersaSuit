@@ -1,0 +1,195 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+  schemas  = ["Products"]
+}
+
+model Brand {
+  BrandID   Int
+  CompanyID Int
+  nBrand    String    @db.VarChar(30)
+  Product   Product[]
+
+  @@id([CompanyID, BrandID], map: "PKc_BrandID")
+  @@schema("Products")
+}
+
+model Category {
+  CategoryID      Int
+  CompanyID       Int
+  SuperCategoryID Int
+  nCategory       String        @db.VarChar(50)
+  Description     String?       @db.VarChar(100)
+  UTC_CreateAT    DateTime?     @default(dbgenerated("getutcdate()"), map: "DFc_CategoryCreateAtUTC") @db.DateTime
+  GTMM6_CreateAT  DateTime?     @default(dbgenerated("switchoffset(CONVERT([datetimeoffset],getutcdate()),'-06:00')"), map: "DFc_CategoryCreateAtGTM") @db.DateTime
+  SuperCategory   SuperCategory @relation(fields: [CompanyID, SuperCategoryID], references: [CompanyID, SuperCategoryID], onUpdate: NoAction, map: "FK_SuperCategoryID_Category")
+  SubCategory     SubCategory[]
+
+  @@id([CompanyID, CategoryID], map: "PKc_CategoryID")
+  @@schema("Products")
+}
+
+model Color {
+  ColorID     Int       @id(map: "PKc_ColorID")
+  nColor      String    @db.VarChar(30)
+  Hexadecimal String    @db.Char(7)
+  Red         Int       @db.SmallInt
+  Green       Int       @db.SmallInt
+  Blue        Int       @db.SmallInt
+  Product     Product[]
+
+  @@schema("Products")
+}
+
+model Model {
+  ModelID   Int
+  CompanyID Int
+  nModel    String    @db.VarChar(30)
+  Product   Product[]
+
+  @@id([CompanyID, ModelID], map: "PKc_ModelID")
+  @@schema("Products")
+}
+
+model Product {
+  ProductID          Int
+  CompanyID          Int
+  SubCategoryID      Int
+  LineID             Int
+  BrandID            Int
+  ModelID            Int
+  ColorID            Int
+  nProduct           String               @db.VarChar(250)
+  Description        String              @db.VarChar(100)
+  ProductNumber      String              @db.VarChar(50)
+  ModelNumber        String              @db.VarChar(50)
+  Serie              String?              @db.VarChar(50)
+  Barcode            String?              @db.VarChar(50)
+  QRCode             String?              @db.Text
+  Reference          String?              @db.VarChar(50)
+  SalePrice          Decimal              @db.Decimal(18, 2)
+  PurchasePrice      Decimal              @db.Decimal(18, 2)
+  Cost               Decimal             @db.Decimal(18, 2)
+  CurrentStock       Int                 @default(0, map: "DF__Product__Current__48CFD27E")
+  MinimumStock       Int                 @default(1, map: "DF__Product__Minimum__49C3F6B7")
+  MaximumStock       Int
+  Status             Boolean
+  UTC_CreateAT       DateTime?            @default(dbgenerated("getutcdate()"), map: "DFc_ProductCreateAtUTC") @db.DateTime
+  GTMM6_CreateAT     DateTime?            @default(dbgenerated("switchoffset(CONVERT([datetimeoffset],getutcdate()),'-06:00')"), map: "DFc_ProductCreateAtGTM") @db.DateTime
+  Brand              Brand                @relation(fields: [CompanyID, BrandID], references: [CompanyID, BrandID], onUpdate: NoAction, map: "FK_BrandID_Brand")
+  Color              Color                @relation(fields: [ColorID], references: [ColorID], onUpdate: NoAction, map: "FK_ColorID_Color")
+  LineTypes          LineTypes?           @relation(fields: [CompanyID, LineID], references: [CompanyID, LineID], onUpdate: NoAction, map: "FK_LineID_LineType")
+  Model              Model                @relation(fields: [CompanyID, ModelID], references: [CompanyID, ModelID], onUpdate: NoAction, map: "FK_ModelID_Model")
+  SubCategory        SubCategory          @relation(fields: [CompanyID, SubCategoryID], references: [CompanyID, SubCategoryID], onUpdate: NoAction, map: "FK_SubCategoryID_Product")
+  ProductComboDetail ProductComboDetail[]
+  ProductMeasure     ProductMeasure[]
+  ProductPhoto       ProductPhoto[]
+
+  @@id([ProductID, CompanyID], map: "PKc_ProductID")
+  @@schema("Products")
+}
+
+model ProductCombo {
+  ComboID            Int
+  CompanyID          Int
+  nCombo             Int
+  ProductComboDetail ProductComboDetail[]
+
+  @@id([CompanyID, ComboID(sort: Desc)], map: "PKc_ComboID")
+  @@schema("Products")
+}
+
+model ProductComboDetail {
+  IdComboDetail Int          @id(sort: Desc, map: "PKc_IdDetail") @default(autoincrement())
+  ComboID       Int
+  CompanyID     Int
+  ProductID     Int
+  PriceCombo    Decimal      @db.Decimal(18, 2)
+  Amount        Int
+  Status        Boolean
+  ProductCombo  ProductCombo @relation(fields: [CompanyID, ComboID], references: [CompanyID, ComboID], onUpdate: NoAction, map: "FK_ComboIDCompanyID_ProductComboDetail")
+  Product       Product      @relation(fields: [ProductID, CompanyID], references: [ProductID, CompanyID], onUpdate: NoAction, map: "FK_ProductIDCompanyID_ProductComboDetail")
+
+  @@schema("Products")
+}
+
+model ProductMeasure {
+  UnitID       Int
+  CompanyID    Int
+  ProductID    Int
+  MeasureValue Decimal     @db.Decimal(18, 2)
+  Product      Product     @relation(fields: [ProductID, CompanyID], references: [ProductID, CompanyID], onUpdate: NoAction, map: "FK_ProductIDCompanyID_UnitMeasure")
+  UnitMeasure  UnitMeasure @relation(fields: [UnitID], references: [UnitID], onUpdate: NoAction, map: "FK_UnitID_UnitMeasure")
+
+  @@id([UnitID, CompanyID, ProductID(sort: Desc)], map: "PKc_UnitIDCompanyIDProductID")
+  @@schema("Products")
+}
+
+model ProductPhoto {
+  PhotoID   Int       @id(sort: Desc, map: "PKc_PhotoID") @default(autoincrement())
+  CompanyID Int
+  ProductID Int
+  Name      String    @db.VarChar(100)
+  Photo     Bytes?
+  UrlPhoto  String    @db.Text
+  isMail    Boolean
+  CreatedAt DateTime? @default(now(), map: "DF__ProductPh__Creat__5070F446") @db.DateTime
+  CreatedBy Int?
+  Product   Product   @relation(fields: [ProductID, CompanyID], references: [ProductID, CompanyID], onUpdate: NoAction, map: "FK_ProductIDCompanyID_ProductPhoto")
+
+  @@schema("Products")
+}
+
+model SubCategory {
+  SubCategoryID  Int
+  CompanyID      Int
+  CategoryID     Int
+  nSubCategory   String    @db.VarChar(50)
+  Description    String?   @db.VarChar(100)
+  UTC_CreateAT   DateTime? @default(dbgenerated("getutcdate()"), map: "DFc_SubCategoryCreateAtUTC") @db.DateTime
+  GTMM6_CreateAT DateTime? @default(dbgenerated("switchoffset(CONVERT([datetimeoffset],getutcdate()),'-06:00')"), map: "DFc_SubCategoryCreateAtGTM") @db.DateTime
+  Product        Product[]
+  Category       Category  @relation(fields: [CompanyID, CategoryID], references: [CompanyID, CategoryID], onUpdate: NoAction, map: "FK_CategoryID_SubCategory")
+
+  @@id([CompanyID, SubCategoryID], map: "PKc_SubCategoryID")
+  @@schema("Products")
+}
+
+model UnitMeasure {
+  UnitID         Int              @id(map: "PKc_UnitID")
+  nUnitMeasure   String           @db.VarChar(100)
+  nUnitType      String           @db.VarChar(50)
+  UnitSymbol     String?          @db.VarChar(10)
+  ProductMeasure ProductMeasure[]
+
+  @@schema("Products")
+}
+
+model SuperCategory {
+  SuperCategoryID Int
+  CompanyID       Int
+  nSuperCategory  String     @db.VarChar(50)
+  Description     String?    @db.VarChar(100)
+  UTC_CreateAT    DateTime?  @default(dbgenerated("getutcdate()"), map: "DFc_SuperCategoryCreateAtUTC") @db.DateTime
+  GTMM6_CreateAT  DateTime?  @default(dbgenerated("switchoffset(CONVERT([datetimeoffset],getutcdate()),'-06:00')"), map: "DFc_SuperCategoryCreateAtGTM") @db.DateTime
+  Category        Category[]
+
+  @@id([CompanyID, SuperCategoryID], map: "PKc_SuperCategoryID")
+  @@schema("Products")
+}
+
+model LineTypes {
+  LineID      Int
+  CompanyID   Int
+  nLine       String    @db.VarChar(50)
+  Description String?   @db.VarChar(100)
+  Product     Product[]
+
+  @@id([CompanyID, LineID], map: "PKc_LineID")
+  @@schema("Products")
+}
